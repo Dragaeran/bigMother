@@ -55,7 +55,7 @@ app.post('/login', (req, res) => {
 io.on('connection', (socket) => {
     console.log('listener connected');
     socket.on('chat message', (msg) => {
-            let content = '<span style="color:#'+msg.color+';">' + msg.username + "</span>: " + msg.content;
+            let content = '<div class="talktext"><p><span style="color:#'+msg.color+';">' + msg.username + "</span>: " + msg.content +"</p></div>";
             io.emit('chat message', content)
         }
     );

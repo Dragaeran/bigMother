@@ -8,47 +8,70 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/bootstrap/js/bootstrap.js"></script>
     <style>
+        body {
+            font: 15px "Ubuntu-Italic", "Lucida Sans", helvetica, sans;
+        }
         #sendMessage {
-            padding: 3px;
             position: fixed;
             bottom: 0;
-            height: 40px;
+            height: 12%;
             width: 100%;
+            max-height: 50px;
+            border-top: solid 1px;
         }
 
         #sendMessage input {
-            border-radius: 100px;
-            border: 1px solid #000000;
-            padding: 10px;
             width: 90%;
             height: 100%;
-            margin-right: .5%;
         }
 
         #send {
+            height: 100%;
             width: 8%;
-            border-radius: 100px;
-            border: 1px solid #000000;
-            padding: 5px;
+
+            outline: 0;
+            background: none;
+            border: 0;
         }
+
 
         #messages {
             position: fixed;
-            bottom:45px ;
-            list-style-type: none;
+            bottom: 12%;
             padding: 0;
+            list-style-type: none;
             width: 100%;
         }
 
-        #messages li {
-            padding: 5px 10px;
-        }
-        #messages, #sendMessage {
-            margin: 0; padding: 0; box-sizing: border-box;
+
+        .talk-bubble {
+            margin: 4px;
+            display: block;
+            position: relative;
+            width: 200px;
+            height: auto;
+            background-color: rgba(255,255,224, 0.5);
+
         }
 
-        body {
-            font: 13px Helvetica, Arial;
+        .talktext .back {
+
+        }
+
+        .talktext {
+            padding: 0.7em;
+            text-align: left;
+            line-height: 1.5em;
+        }
+        .talktext p{
+            /* remove webkit p margins */
+            -webkit-margin-before: 0em;
+            -webkit-margin-after: 0em;
+            word-wrap: break-word;
+        }
+
+        #messages, #sendMessage {
+            box-sizing: border-box;
         }
     </style>
 
@@ -105,17 +128,17 @@
     $(function () {
         let socket = io('http://localhost:8080');
         socket.on('chat message', function (msg) {
-            $('#messages').append($('<li>').html(msg));
+            $('#messages').append($('<li class="talk-bubble">').html(msg));
         });
 
         $('#sendMessage').submit(function () {
             content = $('#m').val()
-            socket.emit('chat message', {username: getCookie('username'), content: content, color:getCookie('color')});
+            socket.emit('chat message', {username: getCookie('username'), content: content, color: getCookie('color')});
             $('#m').val('');
             return false;
         });
 
-        console.log("cookies bpresent: " + document.cookie)
+        console.log("cookies present: " + document.cookie)
         $('#login').submit(function () {
             let username = $('#usrname').val()
             $.ajax({
