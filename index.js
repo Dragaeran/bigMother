@@ -67,6 +67,5 @@ function generateRandomColor() {
     return color
 }
 
-
 //server itself
 app.listen(80, () => console.log('SelFish listening on port 3000!'))

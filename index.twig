@@ -11,6 +11,7 @@
         body {
             font: 15px "Ubuntu-Italic", "Lucida Sans", helvetica, sans;
         }
+
         #sendMessage {
             position: fixed;
             bottom: 0;
@@ -34,7 +35,6 @@
             border: 0;
         }
 
-
         #messages {
             position: fixed;
             bottom: 12%;
@@ -43,14 +43,13 @@
             width: 100%;
         }
 
-
         .talk-bubble {
             margin: 4px;
             display: block;
             position: relative;
             width: 200px;
             height: auto;
-            background-color: rgba(255,255,224, 0.5);
+            background-color: rgba(255, 255, 224, 0.15);
 
         }
 
@@ -63,7 +62,8 @@
             text-align: left;
             line-height: 1.5em;
         }
-        .talktext p{
+
+        .talktext p {
             /* remove webkit p margins */
             -webkit-margin-before: 0em;
             -webkit-margin-after: 0em;
@@ -80,6 +80,10 @@
 
 <body>
 <ul id="messages"></ul>
+<div id="video">
+    <iframe src="http://192.168.43.96:8889" width="100%" frameborder="0"
+            allowfullscreen id="videoFrame"></iframe>
+</div>
 <form id="sendMessage" action="">
     <input id="m" autocomplete="off" class="img-thumbnail"/>
     <button id="send"><img src="assets/send_icon.png" class="img-fluid" alt=""></button>
@@ -157,9 +161,11 @@
         });
 
     });
+
+
+    $('#videoFrame').css('height', $(window).height() + 'px');
+
 </script>
 
 </body>
-
-
 </html>
