@@ -11,6 +11,7 @@ const qs = require('querystring')
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io-client/dist/'));
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'));
+app.use('/assets', express.static(__dirname + '/assets/'));
 app.set('view engine', 'twig');
 app.use(cookieParser());
 app.use(bodyParser.json())
@@ -44,6 +45,7 @@ app.post('/login', (req, res) => {
         post = qs.parse(body);
         console.log(post.username);
         res.cookie('username', post.username);
+        res.cookie('color', generateRandomColor());
         res.sendStatus(201)
     });
 });
@@ -53,11 +55,18 @@ app.post('/login', (req, res) => {
 io.on('connection', (socket) => {
     console.log('listener connected');
     socket.on('chat message', (msg) => {
-            let content = msg.username + ": " + msg.content;
+            let content = '<span style="color:#'+msg.color+';">' + msg.username + "</span>: " + msg.content;
             io.emit('chat message', content)
         }
     );
 });
+
+function generateRandomColor() {
+    color = (0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6)
+    console.log(color)
+    return color
+}
+
 
 //server itself
 app.listen(80, () => console.log('SelFish listening on port 3000!'))

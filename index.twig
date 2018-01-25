@@ -7,6 +7,50 @@
     <script src="/jquery/jquery.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/bootstrap/js/bootstrap.js"></script>
+    <style>
+        #sendMessage {
+            padding: 3px;
+            position: fixed;
+            bottom: 0;
+            height: 40px;
+            width: 100%;
+        }
+
+        #sendMessage input {
+            border-radius: 100px;
+            border: 1px solid #000000;
+            padding: 10px;
+            width: 90%;
+            height: 100%;
+            margin-right: .5%;
+        }
+
+        #send {
+            width: 8%;
+            border-radius: 100px;
+            border: 1px solid #000000;
+            padding: 5px;
+        }
+
+        #messages {
+            position: fixed;
+            bottom:45px ;
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        #messages li {
+            padding: 5px 10px;
+        }
+        #messages, #sendMessage {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font: 13px Helvetica, Arial;
+        }
+    </style>
 
 </head>
 
@@ -14,8 +58,8 @@
 <body>
 <ul id="messages"></ul>
 <form id="sendMessage" action="">
-    <input id="m" autocomplete="off"/>
-    <button>Send</button>
+    <input id="m" autocomplete="off" class="img-thumbnail"/>
+    <button id="send"><img src="assets/send_icon.png" class="img-fluid" alt=""></button>
 </form>
 
 
@@ -54,22 +98,19 @@
         return null;
     }
 
-
     if ({{ isNotConnected }}) {
         $("#myModal").modal()
     }
 
     $(function () {
         let socket = io('http://localhost:8080');
-
-
         socket.on('chat message', function (msg) {
-            $('#messages').append($('<li>').text(msg));
+            $('#messages').append($('<li>').html(msg));
         });
 
         $('#sendMessage').submit(function () {
             content = $('#m').val()
-            socket.emit('chat message', {username: getCookie('username'), content: content});
+            socket.emit('chat message', {username: getCookie('username'), content: content, color:getCookie('color')});
             $('#m').val('');
             return false;
         });
