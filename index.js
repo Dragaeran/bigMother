@@ -55,17 +55,17 @@ app.post('/login', (req, res) => {
 io.on('connection', (socket) => {
     console.log('listener connected');
     socket.on('chat message', (msg) => {
-            let content = '<div class="talktext"><p><span style="color:#'+msg.color+';">' + msg.username + "</span>: " + msg.content +"</p></div>";
+            let content = '<div class="talktext"><p><span style="color:#' + msg.color + ';">' + msg.username + "</span>: " + msg.content + "</p></div>";
             io.emit('chat message', content)
         }
     );
 });
 
 function generateRandomColor() {
-    color = (0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6)
+    color = (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)
     console.log(color)
     return color
 }
 
 //server itself
-app.listen(80, () => console.log('SelFish listening on port 3000!'))
+app.listen(80,'0.0.0.0', () => console.log('SelFish listening on port 3000!'))
