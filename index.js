@@ -16,6 +16,10 @@ app.set('view engine', 'twig');
 app.use(cookieParser());
 app.use(bodyParser.json())
 
+
+const params = require("./params.json")
+
+
 //routes
 app.get('/', (req, res) => {
     if (req.cookies.username) {
@@ -29,7 +33,8 @@ app.get('/', (req, res) => {
 
     res.render(__dirname + '/index.twig', {
         username: username,
-        isNotConnected: isNotConnected
+        isNotConnected: isNotConnected,
+        ip: params.host_ip
     })
 });
 
@@ -68,4 +73,4 @@ function generateRandomColor() {
 }
 
 //server itself
-app.listen(80,'0.0.0.0', () => console.log('SelFish listening on port 3000!'))
+app.listen(80,'0.0.0.0', () => console.log('SelFish listening on port 80!'))

@@ -137,7 +137,8 @@
     }
 
     $(function () {
-        let socket = io('http://192.168.43.202:8080');
+        let ip = {{ ip }} ;
+        let socket = io('http://'+ ip +':8080');
         socket.on('chat message', function (msg) {
             $('#messages').append($('<li class="talk-bubble">').html(msg));
         });
