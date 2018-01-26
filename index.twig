@@ -88,7 +88,7 @@
 <body>
 <ul id="messages"></ul>
 
-<iframe src="http://192.168.43.96:8889" width="100%" frameborder="0"
+<iframe src="http://{{ ip }}:8889" width="100%" frameborder="0"
         allowfullscreen id="videoFrame"></iframe>
 
 <form id="sendMessage" action="">
@@ -137,8 +137,7 @@
     }
 
     $(function () {
-        let ip = {{ ip }} ;
-        let socket = io('http://'+ ip +':8080');
+        let socket = io('http://'+ window.location.host +':8080');
         socket.on('chat message', function (msg) {
             $('#messages').append($('<li class="talk-bubble">').html(msg));
         });
