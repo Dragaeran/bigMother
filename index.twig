@@ -21,6 +21,14 @@
             border-top: solid 1px;
         }
 
+        #videoFrame {
+            padding: 0;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: -9999;
+        }
+
         #sendMessage input {
             width: 90%;
             height: 100%;
@@ -29,7 +37,6 @@
         #send {
             height: 100%;
             width: 8%;
-
             outline: 0;
             background: none;
             border: 0;
@@ -80,10 +87,10 @@
 
 <body>
 <ul id="messages"></ul>
-<div id="video">
-    <iframe src="http://192.168.43.96:8889" width="100%" frameborder="0"
-            allowfullscreen id="videoFrame"></iframe>
-</div>
+
+<iframe src="http://192.168.43.96:8889" width="100%" frameborder="0"
+        allowfullscreen id="videoFrame"></iframe>
+
 <form id="sendMessage" action="">
     <input id="m" autocomplete="off" class="img-thumbnail"/>
     <button id="send"><img src="assets/send_icon.png" class="img-fluid" alt=""></button>
@@ -130,7 +137,7 @@
     }
 
     $(function () {
-        let socket = io('http://localhost:8080');
+        let socket = io('http://192.168.43.202:8080');
         socket.on('chat message', function (msg) {
             $('#messages').append($('<li class="talk-bubble">').html(msg));
         });
