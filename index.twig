@@ -9,7 +9,9 @@
     <script src="/bootstrap/js/bootstrap.js"></script>
     <style>
         body {
-            font: 15px "Ubuntu-Italic", "Lucida Sans", helvetica, sans;
+            font: 25px "Ubuntu-Italic", "Lucida Sans", helvetica, sans;
+
+            background-color:#000000;
         }
 
         #sendMessage {
@@ -21,26 +23,10 @@
             border-top: solid 1px;
         }
 
-        #videoFrame {
-            padding: 0;
-            position: absolute;
-            top: 0px;
-            left: 0px;
+	    .img-center {
+	        margin:0 auto;
             z-index: -9999;
-        }
-
-        #sendMessage input {
-            width: 90%;
-            height: 100%;
-        }
-
-        #send {
-            height: 100%;
-            width: 8%;
-            outline: 0;
-            background: none;
-            border: 0;
-        }
+	    }
 
         #messages {
             position: fixed;
@@ -54,7 +40,7 @@
             margin: 4px;
             display: block;
             position: relative;
-            width: 200px;
+            width: 300px;
             height: auto;
             background-color: rgba(255, 255, 224, 0.15);
 
@@ -80,21 +66,28 @@
         #messages, #sendMessage {
             box-sizing: border-box;
         }
+	#foot {background:#f88; position:absolute; bottom:0; width:100%; height:40px;}
+        #head  {background:#f8f; position:absolute; width:100%; height:60px;}
     </style>
 
 </head>
 
 
 <body>
-<ul id="messages"></ul>
 
-<iframe src="http://{{ ip }}:8889" width="100%" frameborder="0"
-        allowfullscreen id="videoFrame"></iframe>
+        <ul id="messages"></ul>
+        <div class="embed-responsive embed-responsive-16by9">
+            <img class="embed-responsive-item img-center" src="http://{{ ip }}:8889"></img>
+        </div>
+        <form id="sendMessage" action="">
+        <div class="input-group mb-3">
+            <input id="m" autocomplete="off" type="text" class="form-control" placeholder="Message à envoyer" aria-label="Message à envoyer" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-success" id="send" type="submit" alt="">Envoyer</button>
+            </div>
+        </div>
+        </form>
 
-<form id="sendMessage" action="">
-    <input id="m" autocomplete="off" class="img-thumbnail"/>
-    <button id="send"><img src="assets/send_icon.png" class="img-fluid" alt=""></button>
-</form>
 
 
 <!-- Modal -->
@@ -168,9 +161,6 @@
         });
 
     });
-
-
-    $('#videoFrame').css('height', $(window).height() + 'px');
 
 </script>
 

@@ -7,6 +7,15 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const qs = require('querystring');
 
+const exec = require('child_process').exec;
+
+function execute(command, callback){
+    exec(command, function(error, stdout, stderr){ callback(stdout); });
+}
+
+
+
+
 //setting middlewares
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io-client/dist/'));
@@ -37,7 +46,12 @@ app.get('/', (req, res) => {
         ip: params.host_ip
     });
 });
-
+app.get('/shutdown' , (req,res)=> {
+    execute('shutdown now', function(callback){
+        console.log(callback);
+        res.send("Shutdown !");
+    });
+});
 
 app.post('/login', (req, res) => {
     let body = '';
